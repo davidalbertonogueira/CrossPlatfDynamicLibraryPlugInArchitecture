@@ -3,3 +3,6 @@
 ################################################################################
 
 /.svn
+/CrossPlatfDynamicLibraryPlugInArchitecture.VC.db
+/CrossPlatfDynamicLibraryPlugInArchitecture.VC.VC.opendb
+*.suo
