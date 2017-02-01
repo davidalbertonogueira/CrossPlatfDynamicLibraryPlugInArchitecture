@@ -25,27 +25,25 @@
 #define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 #include <windows.h>
-
-#ifdef GENERICLIB_EXPORTS
-#define DLL_API __declspec(dllexport)
-#else
-#define DLL_API __declspec(dllimport)
 #endif
-#endif
-
 
 #ifdef __cplusplus
-#define EXTERN_C_BEGIN extern "C" {
-#define EXTERN_C_END }
-#ifdef _DYNAMICLIBRARY_WINDOWS
-#define EXPORT_FUNCTION DLL_API
+  #define EXTERN_C_BEGIN extern "C" {
+  #define EXTERN_C_END }
+  #ifdef _DYNAMICLIBRARY_WINDOWS
+    #ifdef TRIANGLE_EXPORTS
+      #define DLL_API __declspec(dllexport)
+    #else
+      #define DLL_API __declspec(dllimport)
+    #endif
+    #define EXPORT_FUNCTION DLL_API
+  #else
+    #define EXPORT_FUNCTION 
+  #endif
 #else
-#define EXPORT_FUNCTION 
-#endif
-#else
-#define EXTERN_C_BEGIN
-#define EXTERN_C_END
-#define EXPORT_FUNCTION 
+  #define EXTERN_C_BEGIN
+  #define EXTERN_C_END
+  #define EXPORT_FUNCTION 
 #endif
 
 

@@ -6,3 +6,9 @@
 /CrossPlatfDynamicLibraryPlugInArchitecture.VC.db
 /CrossPlatfDynamicLibraryPlugInArchitecture.VC.VC.opendb
 *.suo
+*/*.o
+*/*.a
+*/*.so
+*/x64/
+x64/
+TargetApplication/targetapplication
