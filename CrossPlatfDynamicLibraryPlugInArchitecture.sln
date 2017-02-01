@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleFunctionsLib", "SimpleFunctionsLib\SimpleFunctionsLib.vcxproj", "{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TargetApplication", "TargetApplication\TargetApplication.vcxproj", "{44FF9CE4-F32C-4B6E-8EE4-E7D378DD6B69}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "circle", "circle\circle.vcxproj", "{8313B5D3-5C3B-404D-9BAC-3AA69EBB5DE5}"
@@ -15,8 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "square", "square\square.vcx
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3401295D-0670-4702-8B2C-82E6460E1F78}"
 	ProjectSection(SolutionItems) = preProject
+		deps\encoding.h = deps\encoding.h
 		README.txt = README.txt
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "genericlib", "genericlib\genericlib.vcxproj", "{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -30,14 +31,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Debug|x64.ActiveCfg = Debug|x64
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Debug|x64.Build.0 = Debug|x64
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Debug|x86.ActiveCfg = Debug|Win32
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Debug|x86.Build.0 = Debug|Win32
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Release|x64.ActiveCfg = Release|x64
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Release|x64.Build.0 = Release|x64
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Release|x86.ActiveCfg = Release|Win32
-		{12B6D2C7-4D06-4C44-8E78-030C71CD5B33}.Release|x86.Build.0 = Release|Win32
 		{44FF9CE4-F32C-4B6E-8EE4-E7D378DD6B69}.Debug|x64.ActiveCfg = Debug|x64
 		{44FF9CE4-F32C-4B6E-8EE4-E7D378DD6B69}.Debug|x64.Build.0 = Debug|x64
 		{44FF9CE4-F32C-4B6E-8EE4-E7D378DD6B69}.Debug|x86.ActiveCfg = Debug|Win32
@@ -70,6 +63,14 @@ Global
 		{39C9760A-1A5D-41A0-BA0C-52131B24F7FA}.Release|x64.Build.0 = Release|x64
 		{39C9760A-1A5D-41A0-BA0C-52131B24F7FA}.Release|x86.ActiveCfg = Release|Win32
 		{39C9760A-1A5D-41A0-BA0C-52131B24F7FA}.Release|x86.Build.0 = Release|Win32
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Debug|x64.ActiveCfg = Debug|x64
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Debug|x64.Build.0 = Debug|x64
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Debug|x86.ActiveCfg = Debug|Win32
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Debug|x86.Build.0 = Debug|Win32
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Release|x64.ActiveCfg = Release|x64
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Release|x64.Build.0 = Release|x64
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Release|x86.ActiveCfg = Release|Win32
+		{EDA7D54F-450F-404C-A1C0-53E3FB3F45A5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

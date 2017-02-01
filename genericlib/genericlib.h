@@ -1,19 +1,18 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
-#include <TargetApplication/shape.h>
+#ifndef GENERICLIB_H
+#define GENERICLIB_H
 
 #if defined(_MSC_VER)
-#   define _DYNAMICLIBRARY_WINDOWS
-#   define _DYNAMICLIBRARY_OSNAME "Windows"
+#   define _GENERICLIB_WINDOWS
+#   define _GENERICLIB_OSNAME "Windows"
 #endif
 
 #ifdef __linux__
-#   define _DYNAMICLIBRARY_LINUX
-#   define _DYNAMICLIBRARY_OSNAME "Linux"
+#   define _GENERICLIB_LINUX
+#   define _GENERICLIB_OSNAME "Linux"
 #endif
 
 
-#ifdef _DYNAMICLIBRARY_WINDOWS
+#ifdef _GENERICLIB_WINDOWS
 #include <SDKDDKVer.h>
 // Including SDKDDKVer.h defines the highest available Windows platform.
 
@@ -37,7 +36,7 @@
 #ifdef __cplusplus
 #define EXTERN_C_BEGIN extern "C" {
 #define EXTERN_C_END }
-#ifdef _DYNAMICLIBRARY_WINDOWS
+#ifdef _GENERICLIB_WINDOWS
 #define EXPORT_FUNCTION DLL_API
 #else
 #define EXPORT_FUNCTION 
@@ -49,15 +48,17 @@
 #endif
 
 
-class triangle : public shape {
-public:
-  triangle() {};
-  ~triangle();
-  void draw();
-};
+#include <string>
 
+// Methods that we want to expose from a library
+void func_print_str(const std::string & a);
+int  func_a_plus_b(int const & a, int const & b);
+
+//Equivalent c-method versions of the previous ones
 EXTERN_C_BEGIN
-EXPORT_FUNCTION shape *create_object();
-EXPORT_FUNCTION void destroy_object(shape * object);
-}
-#endif 
+EXPORT_FUNCTION void cfunc_print_str(const char *a);
+EXPORT_FUNCTION int cfunc_a_plus_b(int const & a, int const & b);
+EXTERN_C_END
+
+
+#endif //GENERICLIB_H

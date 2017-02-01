@@ -1,9 +1,9 @@
 #!/bin/bash
-# Makefile for CrossPlatfDynamicLibraryPlugInArchitecture/SimpleFunctionsLib
+# Makefile for CrossPlatfDynamicLibraryPlugInArchitecture/genericlib
 CC = clang++-3.8
 #CC = g++-6
 DEBUG = -g
-PROJNAME = libsimplefunctions
+PROJNAME = genericlib
 
 HEADERPATH = .
 SOURCEPATH = .
