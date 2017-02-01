@@ -1,0 +1,63 @@
+#!/bin/bash
+# Makefile for CrossPlatfDynamicLibraryPlugInArchitecture/SimpleFunctionsLib
+CC = clang++-3.8
+#CC = g++-6
+DEBUG = -g
+PROJNAME = libsimplefunctions
+
+HEADERPATH = .
+SOURCEPATH = .
+
+LOCALDEPSINCLUDES = ..
+AUXINCLUDES = 
+AUXLIBS = 
+
+INCLUDES  =  
+INCLUDES += -I$(LOCALDEPSINCLUDES)
+#INCLUDES += -I$(AUXINCLUDES)
+#INCLUDES += -I/usr/local/include/
+#INCLUDES += -I/usr/include/
+LIBS  = 
+#LIBS += -L$(AUXLIBS)
+#LIBS += -L/home/dan/lib_deps/
+#LIBS += -L/usr/local/lib/
+#LIBS += -L/usr/lib/
+#LIBS += -L/usr/lib/x86_64-linux-gnu
+CFLAGS  = -std=c++14 -O3 -Wall -fmessage-length=0 -fPIC $(INCLUDES)
+CFLAGS += $(DEBUG)
+LFLAGS  = $(LIBS) 
+#For verbosity
+LFLAGS += -v 
+LDFLAGS = -shared
+ENDLFLAGS = 
+
+HDRS  = $(shell find $(HEADERPATH) $(LOCALDEPSINCLUDES) $(AUXINCLUDES) -name '*.h')
+HDRS += $(shell find $(HEADERPATH) $(LOCALDEPSINCLUDES) $(AUXINCLUDES) -name '*.h++')
+SRCS  = $(shell find $(SOURCEPATH) -name '*.cpp')
+SRCS += $(shell find $(SOURCEPATH) -name '*.c')
+OBJS = $(SRCS:.cpp=.o)
+TXTS = $(wildcard *.txt)
+SCRIPTS = $(wildcard *.sh)
+
+all : $(PROJNAME).a $(PROJNAME).so
+
+$(PROJNAME).a : $(OBJS)
+	@echo Creating static lib $@
+	ar rcs $@ $(OBJS)
+
+$(PROJNAME).so : $(OBJS)
+	@echo Creating dynamic lib $@
+	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LFLAGS) $(ENDLFLAGS)
+
+%.o: %.cpp $(HDRS)
+	$(CC) -c $(CFLAGS) $(LFLAGS) -o $@ $<
+
+clean:
+	@echo Clean
+	rm -f *~ *.o *~
+	@echo Success
+
+cleanall:
+	@echo Clean All
+	rm -f *~ $(SOURCEPATH)/*.o *~ $(PROJNAME).a $(PROJNAME).so $(PROJNAME)
+	@echo Success
