@@ -57,5 +57,5 @@ public:
 EXTERN_C_BEGIN
 EXPORT_FUNCTION shape *create_object();
 EXPORT_FUNCTION void destroy_object(shape * object);
-}
+EXTERN_C_END
 #endif 
