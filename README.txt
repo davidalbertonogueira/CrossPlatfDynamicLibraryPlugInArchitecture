@@ -4,7 +4,7 @@ http://www.linuxjournal.com/article/3687
 
 USAGE:
 
-```
+```cpp
 int main(int argc, char **argv) {
 
   //1) Open dynamic lib; 
@@ -12,8 +12,7 @@ int main(int argc, char **argv) {
   //3) Close lib handle
   {
     LibHandle lib_handle{ nullptr };
-    void(*func_print_str)(const char *a) { nullptr };
-    int(*func_a_plus_b)(int const & a, int const & b) { nullptr };
+     int(*func_a_plus_b)(int const & a, int const & b) { nullptr };
 
     LibraryInfo library_info;
     //Use whatever you need for your SO
