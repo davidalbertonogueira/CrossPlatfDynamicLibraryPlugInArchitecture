@@ -44,17 +44,59 @@
 struct LibraryInfo {
   std::string linux_lib_path;// { "../genericlib/genericlib.so" };
   bool linux_open_as_rtld_lazy{ true };
-  std::string windows_lib_path;// { "../x64/Debug/genericlib.dll" };
+  std::string windows_lib_path;// { "../x64/Release/genericlib.dll" };
 };
 
+inline
+bool OpenDynLibPlugIn(std::string const & lib_path,
+                      LibHandle * lib_handle_ptr,
+                      bool linux_open_as_rtld_lazy = true) {
+#ifdef _DYNAMICLIBRARY_LINUX
+  (*lib_handle_ptr) = dlopen(lib_path.c_str(),
+    (linux_open_as_rtld_lazy) ? RTLD_LAZY : RTLD_NOW);
+
+  if ((*lib_handle_ptr) == NULL) {
+    std::cerr << "Cannot load library: " <<
+      lib_path << std::endl;
+    fprintf(stderr, "%s\n", dlerror());
+    return false;
+  }
+#endif
+
+#ifdef _DYNAMICLIBRARY_WINDOWS
+  bool conv_ok;
+#ifdef UNICODE
+  std::u16string utf16_lib_path =
+    EncodingLib_Conv_UTF8N_UTF16W::ToUTF16W(lib_path,
+                                              &conv_ok);
+  if (!conv_ok)
+    return false;
+
+  (*lib_handle_ptr) = LoadLibrary((const wchar_t *)utf16_lib_path.c_str());
+#else
+  (*lib_handle_ptr) = LoadLibrary((const char *)lib_path.c_str());
+#endif
+  if ((*lib_handle_ptr) == NULL) {
+    std::cerr << "Cannot load library: " <<
+      lib_path << std::endl;
+    return false;
+  }
+
+#endif
+
+  return true;
+}
+
+
+inline
 bool OpenDynLibPlugIn(LibraryInfo const & library_info,
                       LibHandle * lib_handle_ptr) {
 #ifdef _DYNAMICLIBRARY_LINUX
-  (*lib_handle_ptr) = dlopen(library_info.linux_lib_path.c_str(), 
-                             (library_info.linux_open_as_rtld_lazy)? RTLD_LAZY : RTLD_NOW);
+  (*lib_handle_ptr) = dlopen(library_info.linux_lib_path.c_str(),
+    (library_info.linux_open_as_rtld_lazy) ? RTLD_LAZY : RTLD_NOW);
 
   if ((*lib_handle_ptr) == NULL) {
-    std::cerr << "Cannot load library: " << 
+    std::cerr << "Cannot load library: " <<
       library_info.linux_lib_path << std::endl;
     fprintf(stderr, "%s\n", dlerror());
     return false;
@@ -63,15 +105,19 @@ bool OpenDynLibPlugIn(LibraryInfo const & library_info,
 
 #ifdef _DYNAMICLIBRARY_WINDOWS
   bool conv_ok;
+#ifdef UNICODE
   std::u16string utf16_lib_path =
-    EncodingLib_Conv_UTF8N_UTF16W::ToUTF16W(library_info.windows_lib_path, 
-                                            &conv_ok);
+    EncodingLib_Conv_UTF8N_UTF16W::ToUTF16W(library_info.windows_lib_path,
+                                              &conv_ok);
   if (!conv_ok)
     return false;
 
   (*lib_handle_ptr) = LoadLibrary((const wchar_t *)utf16_lib_path.c_str());
+#else
+  (*lib_handle_ptr) = LoadLibrary((const char *)library_info.windows_lib_path.c_str());
+#endif
   if ((*lib_handle_ptr) == NULL) {
-    std::cerr << "Cannot load library: " << 
+    std::cerr << "Cannot load library: " <<
       library_info.windows_lib_path << std::endl;
     return false;
   }
@@ -82,6 +128,7 @@ bool OpenDynLibPlugIn(LibraryInfo const & library_info,
 }
 
 //Returns address to the function which has been loaded with the shared library.
+inline
 bool GetDynLibFunctionPointer(const std::string & function_name,
                               LibHandle lib_handle,
                               void ** function_ptr) {
@@ -93,7 +140,7 @@ bool GetDynLibFunctionPointer(const std::string & function_name,
 
   const char* dlsym_error = dlerror();
   if (dlsym_error != NULL) {
-    std::cerr << "Cannot load symbol " << function_name << 
+    std::cerr << "Cannot load symbol " << function_name <<
       ": " << dlsym_error << std::endl;
     return false;
   }
@@ -102,7 +149,7 @@ bool GetDynLibFunctionPointer(const std::string & function_name,
 #ifdef _DYNAMICLIBRARY_WINDOWS
   (*function_ptr) = GetProcAddress(lib_handle, function_name.c_str());
   if (!(*function_ptr)) {
-    std::cerr << "Cannot load symbol " << function_name << 
+    std::cerr << "Cannot load symbol " << function_name <<
       ": " << GetLastError() << std::endl;
     return false;
   }
@@ -113,6 +160,7 @@ bool GetDynLibFunctionPointer(const std::string & function_name,
   return true;
 }
 
+inline
 bool CloseDynLibPlugIn(LibHandle lib_handle) {
 #ifdef _DYNAMICLIBRARY_LINUX
   int retval = dlclose(lib_handle);
