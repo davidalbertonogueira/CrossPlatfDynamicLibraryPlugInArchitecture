@@ -7,8 +7,10 @@
 #include "shape.h"
 
 #ifdef _DYNAMICLIBRARY_LINUX
+EXTERN_C_BEGIN
 //factory of classes : maps names to pair <constructor, destructor>
 std::map <std::string, std::pair<shape*(*)(), void(*)(shape*)> > factory;
+EXTERN_C_END
 #endif
 
 int main(int argc, char **argv) {
