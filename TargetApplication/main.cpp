@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
       std::cerr << "Error getting function" << std::endl; return -1;
     }
     std::string arg1{ "Hello world!" };
-    std::cout << "cfunc_print_str(3) = ";
+    std::cout << "cfunc_print_str(\"Hello world!\") = ";
     (*func_print_str)(arg1.c_str());
 
     if (!GetDynLibFunctionPointer("cfunc_a_plus_b", lib_handle, (void**)&func_a_plus_b)) {
@@ -147,7 +147,7 @@ int main(int argc, char **argv) {
   //      provide a way to create objects of the new class and register that
   //      "create_object" function with the factory automatically, 
   //      using whatever key value the class designer chooses.
-  //      This approach is known as “self-registering objects” 
+  //      This approach is known as â€œself-registering objectsâ€ 
   //      and was introduced by Jim Beveridge
   //      A proxy class is used solely to register the "create_object". 
   //      The registration occurs in the constructor for the class, 
